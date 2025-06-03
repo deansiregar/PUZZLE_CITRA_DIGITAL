@@ -1,78 +1,174 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+/* Atau Lato: @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=255, 0, 2555'); */
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 20px;
-    background-color: #f4f4f4;
+    background-color: #e9f5ff;
     color: #333;
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 100vh;
+}
+
+.main-header {
+    width: 100%;
+    max-width: 900px;
+    text-align: center;
+    padding: 15px 0;
+    margin-bottom: 20px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.main-footer {
+    width: 100%;
+    max-width: 900px;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 40px;
+    color: #666;
+    font-size: 0.9em;
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
 }
 
 .page {
-    display: none; /* Sembunyikan semua halaman secara default */
+    display: none;
     width: 100%;
-    max-width: 900px; /* Batas lebar konten */
+    max-width: 900px;
     background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     margin-top: 20px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+
+    /* Animasi Page Transition: Fade-in */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
 
 .page.active {
-    display: block; /* Tampilkan halaman yang aktif */
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
 }
 
 h1, h2, h3 {
-    color: #0056b3; /* Warna biru untuk judul */
+    color: #0056b3;
+    font-weight: 600;
+    margin-bottom: 15px;
 }
 
+h1 { font-size: 2.5em; }
+h2 { font-size: 2em; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px;}
+h3 { font-size: 1.5em; }
+
+p {
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+ul {
+    margin-bottom: 15px;
+    padding-left: 25px;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+
+/* Tombol */
 button {
     background-color: #007bff;
     color: white;
     border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
+    padding: 12px 25px;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 16px;
-    margin-top: 10px;
+    font-size: 1.1em;
+    font-weight: 600;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Tambah box-shadow transition */
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
 }
 
 button:hover {
     background-color: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4);
 }
 
 button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
 }
 
+/* Input dan Select */
 input[type="file"], select {
     margin-bottom: 15px;
-    padding: 8px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #aaddff;
+    font-size: 1em;
+    width: calc(100% - 22px);
+    max-width: 400px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Animasi focus */
 }
 
+input[type="file"]:focus, select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+/* Area Puzzle */
 .puzzle-area {
-    display: grid; /* Akan diatur oleh JS */
-    border: 2px solid #ccc;
-    margin: 20px auto;
-    position: relative; /* Untuk positioning absolut kepingan jika diperlukan */
+    display: grid;
+    border: 3px solid #007bff;
+    margin: 30px auto;
+    position: relative;
+    background-color: #f0f8ff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: inset 0 0 10px rgba(0, 123, 255, 0.1);
 }
 
 .puzzle-piece {
-    background-size: cover; /* Ukuran gambar akan diatur oleh JS */
-    border: 1px solid #eee;
+    background-size: cover;
+    background-position: center;
+    border: 1px solid rgba(255, 255, 255, 0.5);
     box-sizing: border-box;
     cursor: grab;
-    user-select: none; /* Mencegah seleksi teks saat drag */
+    user-select: none;
+    transition: transform 0.15s ease-out, border 0.1s ease-out, box-shadow 0.2s ease; /* Transisi untuk hover dan drag */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Bayangan default */
+}
+
+.puzzle-piece:hover:not(.dragging) { /* Efek hover pada piece, kecuali saat di-drag */
+    transform: scale(1.03);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    z-index: 10; /* Pastikan piece yang dihover ada di atas */
 }
 
 .puzzle-piece.dragging {
     opacity: 0.7;
     cursor: grabbing;
+    transform: scale(1.05); /* Sedikit lebih besar saat di-drag */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3); /* Bayangan lebih kuat saat di-drag */
+    z-index: 100; /* Pastikan piece yang di-drag ada di paling atas */
 }
 
 .puzzle-piece.rotated-90 { transform: rotate(90deg); }
@@ -80,94 +176,221 @@ input[type="file"], select {
 .puzzle-piece.rotated-270 { transform: rotate(270deg); }
 
 
+/* Materi Section */
 .material-section {
-    margin-top: 30px;
-    padding: 15px;
-    background-color: #e9f5ff;
-    border-left: 5px solid #007bff;
+    margin-top: 40px;
+    padding: 25px;
+    background-color: #f0faff;
+    border-left: 6px solid #007bff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+
+    /* Animasi Pop-in untuk materi */
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInSlideUp 0.6s ease-out forwards; /* Menggunakan keyframes */
+}
+
+@keyframes fadeInSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.material-section h3 {
+    color: #0056b3;
+    margin-top: 0;
+}
+
+.image-comparison {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    margin: 25px 0;
+    flex-wrap: wrap;
+}
+
+.image-comparison figure {
+    margin: 0;
+    text-align: center;
+    width: 45%;
+    max-width: 250px;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animasi hover gambar */
+}
+
+.image-comparison figure:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
 .image-comparison img {
-    width: 48%;
-    margin: 1%;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
     border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
 }
+
+.image-comparison figcaption {
+    font-size: 0.95em;
+    color: #555;
+    font-style: italic;
+}
+
 
 /* Untuk area drag-and-drop Halaman 2 */
 .drop-target-area {
-    display: grid; /* Akan diatur oleh JS */
-    border: 2px dashed #007bff;
-    margin: 20px auto;
-    gap: 1px; /* Jarak antar slot */
+    display: grid;
+    border: 3px dashed #007bff;
+    margin: 30px auto;
+    gap: 1px;
+    background-color: #f0f8ff;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .drop-slot {
-    background-color: #f0f0f0;
-    border: 1px solid #d0d0d0;
+    background-color: #e3f2fd;
+    border: 1px solid #b0e0ff;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 50px; /* Atur sesuai ukuran kepingan */
+    box-sizing: border-box;
+    transition: background-color 0.2s ease, transform 0.1s ease; /* Animasi hover slot */
 }
+
+.drop-slot:hover {
+    background-color: #d0edff;
+    transform: scale(1.01); /* Sedikit membesar saat di-hover */
+}
+
+.drop-slot:empty {
+    background-color: #f0f8ff;
+    border-color: #b0e0ff;
+}
+
 
 .shuffled-pieces-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 5px;
-    margin-top: 15px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
-}
-
-.puzzle-area {
-    display: grid;
-    border: 2px solid #ccc;
-    margin: 20px auto;
-    position: relative;
-    /* aspect-ratio: 1 / 1; /* Pastikan area puzzle persegi jika JS tidak mengaturnya */
-}
-
-.puzzle-piece {
-    background-size: cover;
-    background-position: center; /* Pusatkan gambar di kepingan */
-    border: 1px solid #eee;
-    box-sizing: border-box;
-    cursor: grab;
-    user-select: none;
-    /* aspect-ratio: 1 / 1; /* Pastikan kepingan persegi */
-}
-
-/* ... (CSS lainnya) ... */
-.drop-target-area {
-    display: grid;
-    border: 2px dashed #007bff;
-    margin: 20px auto;
-    gap: 1px;
-    /* aspect-ratio: 1 / 1; */
-}
-
-.drop-slot {
-    background-color: #f0f0f0;
-    border: 1px solid #d0d0d0;
-    display: flex;
+    gap: 8px;
+    margin-top: 25px;
+    padding: 15px;
+    border: 1px solid #b0e0ff;
+    background-color: #f9fcff;
+    border-radius: 8px;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.05);
     justify-content: center;
+}
+
+/* Timer Display */
+.puzzle-controls {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    /* aspect-ratio: 1 / 1; */
-    /* min-height dihapus karena ukuran akan diatur JS */
+    width: 100%;
+    max-width: 900px;
+    margin-bottom: 20px;
+    padding: 10px 0;
 }
 
-.shuffled-pieces-container .puzzle-piece {
-    /* Pastikan ukuran kepingan di area acak juga konsisten */
-    box-sizing: border-box; /* Sudah ada di .puzzle-piece umum */
+#timerDisplay2, #timerDisplay3, #timerDisplay4 {
+    font-size: 1.3em;
+    font-weight: 700;
+    color: #0056b3;
+    background-color: #e6f7ff;
+    padding: 8px 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease; /* Animasi saat timer update (opsional, bisa bikin flicker) */
 }
 
-.image-comparison img {
-    width: 48%;
-    /* max-width: 200px; /* Dihapus dari sini, dikontrol JS/CSS spesifik halaman */
-    /* max-height: 200px; /* Dihapus dari sini */
-    aspect-ratio: 1 / 1; /* Agar gambar perbandingan juga persegi */
-    object-fit: contain; /* Agar gambar tidak terdistorsi jika sumbernya belum persegi sempurna (meskipun seharusnya sudah) */
-    margin: 1%;
-    border: 1px solid #ddd;
+/* ... (CSS yang sudah ada) ... */
+
+/* Gaya untuk Quiz */
+.quiz-question {
+    background-color: #f8faff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.quiz-question p strong {
+    color: #0056b3;
+}
+
+.options-container label {
+    display: block; /* Membuat setiap opsi berada di baris baru */
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    border: 1px solid #cce5ff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.options-container label:hover {
+    background-color: #e6f7ff;
+    border-color: #99ccff;
+}
+
+.options-container input[type="radio"] {
+    margin-right: 10px;
+    accent-color: #007bff; /* Warna checkbox/radio button */
+}
+
+#quizFeedback {
+    text-align: center;
+    font-size: 1.2em;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #fff3cd; /* Warna kuning lembut untuk feedback */
+    border: 1px solid #ffeeba;
+    color: #856404;
+    display: none; /* Akan ditampilkan oleh JS */
+}
+
+#quizFeedback p {
+    margin: 5px 0;
+}
+
+/* Tampilkan feedback jika ada konten */
+#quizFeedback:not(:empty) {
+    display: block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    .page {
+        padding: 20px;
+    }
+    h1 { font-size: 2em; }
+    h2 { font-size: 1.7em; }
+    h3 { font-size: 1.3em; }
+    button {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+    .image-comparison figure {
+        width: 100%;
+        max-width: 300px;
+    }
 }
