@@ -1,0 +1,173 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.page {
+    display: none; /* Sembunyikan semua halaman secara default */
+    width: 100%;
+    max-width: 900px; /* Batas lebar konten */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-top: 20px;
+}
+
+.page.active {
+    display: block; /* Tampilkan halaman yang aktif */
+}
+
+h1, h2, h3 {
+    color: #0056b3; /* Warna biru untuk judul */
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+input[type="file"], select {
+    margin-bottom: 15px;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.puzzle-area {
+    display: grid; /* Akan diatur oleh JS */
+    border: 2px solid #ccc;
+    margin: 20px auto;
+    position: relative; /* Untuk positioning absolut kepingan jika diperlukan */
+}
+
+.puzzle-piece {
+    background-size: cover; /* Ukuran gambar akan diatur oleh JS */
+    border: 1px solid #eee;
+    box-sizing: border-box;
+    cursor: grab;
+    user-select: none; /* Mencegah seleksi teks saat drag */
+}
+
+.puzzle-piece.dragging {
+    opacity: 0.7;
+    cursor: grabbing;
+}
+
+.puzzle-piece.rotated-90 { transform: rotate(90deg); }
+.puzzle-piece.rotated-180 { transform: rotate(180deg); }
+.puzzle-piece.rotated-270 { transform: rotate(270deg); }
+
+
+.material-section {
+    margin-top: 30px;
+    padding: 15px;
+    background-color: #e9f5ff;
+    border-left: 5px solid #007bff;
+}
+
+.image-comparison img {
+    width: 48%;
+    margin: 1%;
+    border: 1px solid #ddd;
+}
+
+/* Untuk area drag-and-drop Halaman 2 */
+.drop-target-area {
+    display: grid; /* Akan diatur oleh JS */
+    border: 2px dashed #007bff;
+    margin: 20px auto;
+    gap: 1px; /* Jarak antar slot */
+}
+
+.drop-slot {
+    background-color: #f0f0f0;
+    border: 1px solid #d0d0d0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50px; /* Atur sesuai ukuran kepingan */
+}
+
+.shuffled-pieces-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+}
+
+.puzzle-area {
+    display: grid;
+    border: 2px solid #ccc;
+    margin: 20px auto;
+    position: relative;
+    /* aspect-ratio: 1 / 1; /* Pastikan area puzzle persegi jika JS tidak mengaturnya */
+}
+
+.puzzle-piece {
+    background-size: cover;
+    background-position: center; /* Pusatkan gambar di kepingan */
+    border: 1px solid #eee;
+    box-sizing: border-box;
+    cursor: grab;
+    user-select: none;
+    /* aspect-ratio: 1 / 1; /* Pastikan kepingan persegi */
+}
+
+/* ... (CSS lainnya) ... */
+.drop-target-area {
+    display: grid;
+    border: 2px dashed #007bff;
+    margin: 20px auto;
+    gap: 1px;
+    /* aspect-ratio: 1 / 1; */
+}
+
+.drop-slot {
+    background-color: #f0f0f0;
+    border: 1px solid #d0d0d0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* aspect-ratio: 1 / 1; */
+    /* min-height dihapus karena ukuran akan diatur JS */
+}
+
+.shuffled-pieces-container .puzzle-piece {
+    /* Pastikan ukuran kepingan di area acak juga konsisten */
+    box-sizing: border-box; /* Sudah ada di .puzzle-piece umum */
+}
+
+.image-comparison img {
+    width: 48%;
+    /* max-width: 200px; /* Dihapus dari sini, dikontrol JS/CSS spesifik halaman */
+    /* max-height: 200px; /* Dihapus dari sini */
+    aspect-ratio: 1 / 1; /* Agar gambar perbandingan juga persegi */
+    object-fit: contain; /* Agar gambar tidak terdistorsi jika sumbernya belum persegi sempurna (meskipun seharusnya sudah) */
+    margin: 1%;
+    border: 1px solid #ddd;
+}
