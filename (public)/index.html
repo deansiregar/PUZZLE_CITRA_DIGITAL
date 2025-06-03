@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SmartPixel - Puzzle Edukatif Citra Digital</title>
     <link rel="stylesheet" href="css/style.css">
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']], // For inline math
+                displayMath: [['$$', '$$'], ['\\[', '\\]']] // For display math
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
     <script type="text/javascript" id="MathJax-script" async
             src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
     </script>
@@ -16,22 +27,267 @@
     </header>
 
     <div id="page-0" class="page active">
-        </div>
+        <h1>Selamat Datang di SmartPixel! 🧩</h1>
+        <p>Asah pemahamanmu tentang dunia citra digital melalui puzzle interaktif yang seru! Unggah gambarmu sendiri dan mulailah petualangan belajar tentang piksel, resolusi, transformasi, dan model warna.</p>
+        <button id="startAdventureBtn">Mulai Petualangan!</button>
+    </div>
 
     <div id="page-1" class="page">
+        <h2>Langkah 1: Siapkan Kanvas Digitalmu 🖼️</h2>
+        <div>
+            <label for="imageUpload">Pilih Gambar (JPG/PNG):</label>
+            <input type="file" id="imageUpload" accept="image/jpeg, image/png">
         </div>
+        <img id="imagePreview" src="#" alt="Pratinjau Gambar Asli" style="max-width: 300px; max-height: 300px; display: none; margin-top:10px; border: 1px solid #ccc;">
+        <p id="imageCropInfo" style="font-style: italic; font-size: 0.9em; display:none;">Gambar ini akan dipotong menjadi persegi untuk puzzle.</p>
+        <div>
+            <label for="difficultySelect">Pilih Tingkat Kesulitan:</label>
+            <select id="difficultySelect">
+                <option value="3">Mudah (3x3)</option>
+                <option value="4">Sedang (4x4)</option>
+                <option value="5">Sulit (5x5)</option>
+            </select>
+        </div>
+        <button id="startPuzzleBtnPage1" disabled>Mulai Puzzle!</button>
+    </div>
 
     <div id="page-2" class="page">
+        <h2>Puzzle #1: Menyusun Dasar Citra 🖱️</h2>
+        <div class="puzzle-controls">
+             <div id="timerDisplay2">Waktu: 0s</div>
+             <button id="autoSolveBtnPage2">Auto Solve</button>
         </div>
+        <div id="shuffledPiecesContainerPage2" class="shuffled-pieces-container"></div>
+        <div id="dropTargetAreaPage2" class="drop-target-area"></div>
+        <div id="materialPage2" class="material-section" style="display:none;">
+            <h3>Mengenal Pixel dan Resolusi: Fondasi Citra Digital</h3>
+            <p>Selamat! Anda telah berhasil menyusun kepingan-kepingan gambar. Setiap kepingan, dan gambar secara keseluruhan, tersusun dari elemen-elemen dasar yang sangat kecil.</p>
+            <h4>Pixel (<em>Picture Element</em>)</h4>
+            <p>
+                <strong>Pixel</strong> adalah unit terkecil yang membentuk sebuah gambar digital pada layar atau sensor kamera. Bayangkan sebuah mozaik raksasa yang tersusun dari jutaan ubin kecil; setiap ubin tersebut adalah analogi dari pixel. Setiap pixel memiliki nilai warna atau intensitas cahaya tertentu.
+            </p>
+            <ul>
+                <li><strong>Warna dan Intensitas:</strong> Pada gambar berwarna, setiap pixel biasanya merepresentasikan kombinasi dari tiga warna dasar (Merah, Hijau, Biru - RGB) atau pada gambar grayscale, ia merepresentasikan satu tingkat keabuan.</li>
+                <li><strong>Kepadatan Pixel:</strong> Semakin banyak pixel yang terkandung dalam suatu area tertentu (kepadatan pixel), semakin detail dan halus gambar yang ditampilkan. Ini sering diukur dalam PPI (Pixels Per Inch) untuk layar.</li>
+                <li><strong>Bit Depth:</strong> Jumlah bit yang digunakan untuk merepresentasikan warna setiap pixel menentukan berapa banyak variasi warna yang dapat ditampilkan. Misalnya:
+                    <ul>
+                        <li>1-bit: Hanya 2 warna (biasanya hitam dan putih).</li>
+                        <li>8-bit (grayscale): $2^8$ = 256 tingkat keabuan.</li>
+                        <li>24-bit (True Color RGB): 8 bit per channel warna (R, G, B), menghasilkan $2^{24}$ $\approx$ 16.7 juta warna.</li>
+                    </ul>
+                </li>
+            </ul>
+            <div id="pixelZoomDemo" style="margin-top:15px; margin-bottom:15px;"></div>
+            <h4>Resolusi Citra</h4>
+            <p>
+                <strong>Resolusi</strong> sebuah citra digital mengacu pada jumlah total pixel yang menyusun citra tersebut. Biasanya, resolusi dinyatakan dalam format <strong>lebar x tinggi</strong> (misalnya, 1920x1080 pixel, yang berarti gambar memiliki lebar 1920 pixel dan tinggi 1080 pixel).
+            </p>
+            <ul>
+                <li><strong>Detail Gambar:</strong> Semakin tinggi resolusi sebuah gambar (semakin banyak jumlah pixelnya), semakin besar potensi detail yang dapat ditangkap dan ditampilkan. Gambar dengan resolusi tinggi akan terlihat lebih tajam dan jelas, terutama saat diperbesar.</li>
+                <li><strong>Ukuran File:</strong> Umumnya, gambar dengan resolusi lebih tinggi memiliki ukuran file yang lebih besar karena lebih banyak data informasi pixel yang harus disimpan.</li>
+                <li><strong>Standar Umum:</strong> Beberapa standar resolusi yang umum dikenal antara lain:
+                    <ul>
+                        <li>HD (High Definition): 1280x720 pixel</li>
+                        <li>Full HD (FHD): 1920x1080 pixel</li>
+                        <li>QHD (Quad HD)/2K: 2560x1440 pixel</li>
+                        <li>UHD (Ultra HD)/4K: 3840x2160 pixel</li>
+                    </ul>
+                </li>
+            </ul>
+            <p>Gambar persegi yang digunakan untuk puzzle ini memiliki resolusi <strong id="imageResolutionDisplay"></strong> (lebar x tinggi dalam pixel).</p>
+            <button id="nextChallengeBtnPage2">Lanjut ke Tantangan Berikutnya</button>
+        </div>
+    </div>
 
     <div id="page-3" class="page">
+        <h2>Puzzle #2: Transformasi dan Pengenalan Objek 🔄</h2>
+        <div class="puzzle-controls">
+             <div id="timerDisplay3">Waktu: 0s</div>
+             <button id="autoSolveBtnPage3">Auto Solve</button>
         </div>
+        <div id="puzzleAreaPage3" class="puzzle-area"></div>
+        <p style="text-align:center; font-style:italic;">Klik 1x untuk memilih, klik kepingan lain untuk menukar. Klik kiri 2x untuk memutar.</p>
+        <div id="materialPage3" class="material-section" style="display:none;">
+            <h3>Transformasi Geometri dan Konsep Segmentasi Citra</h3>
+            <p>Anda baru saja menyelesaikan puzzle dengan cara menukar dan memutar kepingan. Proses ini secara langsung berkaitan dengan konsep penting dalam pengolahan citra, yaitu <strong>transformasi geometri</strong> dan <strong>segmentasi citra</strong>.</p>
+            <h4>Transformasi Geometri</h4>
+            <p>
+                Transformasi geometri adalah operasi yang mengubah posisi, orientasi, atau ukuran objek (dalam hal ini, kepingan puzzle) dalam sebuah citra. Beberapa transformasi dasar yang relevan dengan apa yang baru saja Anda lakukan meliputi:
+            </p>
+            <ul>
+                <li>
+                    <strong>Translasi (Pergeseran):</strong> Ini terjadi ketika Anda menukar posisi dua kepingan puzzle. Secara matematis, translasi adalah pemindahan setiap titik objek sejauh vektor tertentu $(t_x, t_y)$. Jika sebuah titik awal adalah $(x, y)$, maka setelah translasi menjadi $(x', y')$ dimana:
+                    <p>$$x' = x + t_x$$</p>
+                    <p>$$y' = y + t_y$$</p>
+                </li>
+                <li>
+                    <strong>Rotasi (Perputaran):</strong> Ini terjadi ketika Anda memutar sebuah kepingan puzzle. Rotasi dilakukan terhadap suatu titik pivot (biasanya pusat kepingan) dengan sudut tertentu $(\theta)$. Untuk rotasi terhadap titik asal (0,0), koordinat baru $(x', y')$ dari titik $(x, y)$ adalah:
+                    <p>$$x' = x \cos\theta - y \sin\theta$$</p>
+                    <p>$$y' = x \sin\theta + y \cos\theta$$</p>
+                </li>
+                <li>
+                    <strong>Penskalaan (Scaling):</strong> Meskipun tidak secara langsung Anda lakukan, penskalaan adalah transformasi untuk mengubah ukuran objek. Ini bisa uniform (semua sumbu diskalakan sama) atau non-uniform.
+                </li>
+                <li>
+                    <strong>Geseran (Shearing):</strong> Transformasi yang memiringkan objek, seolah-olah lapisan-lapisan objek digeser satu sama lain.
+                </li>
+            </ul>
+            <p>Transformasi-transformasi ini seringkali direpresentasikan menggunakan matriks dan merupakan dasar dari banyak operasi grafis komputer dan pengolahan citra.</p>
+
+            <h4>Konsep Segmentasi Citra</h4>
+            <p>
+                <strong>Segmentasi citra</strong> adalah proses mempartisi atau membagi sebuah citra digital menjadi beberapa segmen (kumpulan pixel) atau objek yang lebih bermakna dan mudah dianalisis. Tujuannya adalah untuk menyederhanakan representasi citra atau untuk melokalisasi objek dan batas-batasnya.
+            </p>
+            <ul>
+                <li><strong>Analogi dengan Puzzle:</strong> Memecah gambar menjadi kepingan-kepingan puzzle adalah bentuk sederhana dari segmentasi. Setiap kepingan adalah sebuah "segmen" dari gambar utuh.</li>
+                <li><strong>Tujuan Utama:</strong> Dalam aplikasi nyata, segmentasi membantu dalam:
+                    <ul>
+                        <li><strong>Pengenalan Objek:</strong> Mengidentifikasi dan memisahkan objek dari latar belakang atau objek lain.</li>
+                        <li><strong>Analisis Citra Medis:</strong> Mendeteksi tumor, organ, atau anomali lain dalam citra medis seperti MRI atau CT scan.</li>
+                        <li><strong>Computer Vision:</strong> Memungkinkan mesin untuk "memahami" konten visual, misalnya pada mobil otonom untuk mendeteksi jalan, pejalan kaki, atau kendaraan lain.</li>
+                    </ul>
+                </li>
+                <li><strong>Pendekatan Dasar (Konseptual):</strong>
+                    <ul>
+                        <li><strong>Thresholding (Pengambangan):</strong> Memisahkan pixel berdasarkan nilai intensitasnya. Pixel di atas ambang batas tertentu masuk ke satu segmen, yang di bawahnya ke segmen lain.</li>
+                        <li><strong>Deteksi Tepi (Edge Detection):</strong> Menemukan batas antar wilayah dengan mencari perubahan intensitas yang tajam.</li>
+                        <li><strong>Region Growing (Pertumbuhan Wilayah):</strong> Memulai dari pixel "benih" dan menambahkan pixel tetangga yang memiliki karakteristik serupa (misalnya, warna atau intensitas) ke dalam segmen.</li>
+                    </ul>
+                </li>
+            </ul>
+            <p>Dengan memahami bagaimana gambar dapat dipecah dan dimanipulasi, kita membuka jalan untuk analisis citra yang lebih canggih.</p>
+            <button id="nextChallengeBtnPage3">Lanjut ke Puzzle Grayscale</button>
+        </div>
+    </div>
 
     <div id="page-4" class="page">
+        <h2>Puzzle #3: Pesona Skala Keabuan (Grayscale) 🎨</h2>
+        <div class="puzzle-controls">
+             <div id="timerDisplay4">Waktu: 0s</div>
+             <button id="autoSolveBtnPage4">Auto Solve</button>
         </div>
+        <div id="puzzleAreaPage4" class="puzzle-area"></div>
+         <p style="text-align:center; font-style:italic;">Klik 1x untuk memilih, klik kepingan lain untuk menukar. Klik kiri 2x untuk memutar.</p>
+       <div id="materialPage4" class="material-section" style="display:none;">
+            <h3>Memahami Grayscale dan Model Warna RGB</h3>
+            <p>Puzzle terakhir ini Anda selesaikan menggunakan versi gambar dalam skala keabuan (grayscale). Ini adalah salah satu cara representasi citra yang umum, berbeda dengan gambar berwarna yang biasanya menggunakan model RGB.</p>
+
+            <h4>Citra Grayscale (Skala Keabuan)</h4>
+            <p>
+                Citra <strong>grayscale</strong> adalah gambar digital di mana nilai setiap pixel hanya merepresentasikan informasi intensitas cahaya (luminans), tanpa informasi warna. Ini berarti setiap pixel adalah sebuah bayangan abu-abu, mulai dari hitam pekat (intensitas terendah) hingga putih bersih (intensitas tertinggi).
+            </p>
+            <ul>
+                <li><strong>Satu Channel:</strong> Berbeda dengan gambar berwarna yang mungkin memiliki beberapa channel (misalnya, 3 channel untuk RGB), gambar grayscale hanya memiliki satu channel data per pixel.</li>
+                <li><strong>Representasi Intensitas:</strong> Jika menggunakan 8-bit per pixel (yang umum), gambar grayscale dapat menampilkan $2^8$ = 256 tingkat keabuan yang berbeda (nilai dari 0 hingga 255).</li>
+                <li><strong>Konversi dari RGB ke Grayscale:</strong> Untuk mengubah gambar berwarna (RGB) menjadi grayscale, salah satu metode yang paling umum adalah dengan menghitung rata-rata berbobot dari komponen Merah (R), Hijau (G), dan Biru (B). Formula yang sering digunakan adalah:
+                    <p>$$Luminance = 0.299 \times R + 0.587 \times G + 0.114 \times B$$</p>
+                    Pembobotan ini dilakukan karena mata manusia lebih sensitif terhadap warna hijau dibandingkan warna lainnya. Ada juga metode lain seperti mengambil rata-rata sederhana ($ (R+G+B)/3 $) atau hanya menggunakan channel hijau.
+                </li>
+                <li><strong>Aplikasi:</strong>
+                    <ul>
+                        <li>Mengurangi kompleksitas data untuk analisis citra.</li>
+                        <li>Beberapa teknik pencetakan atau tampilan monokromatik.</li>
+                        <li>Efek artistik dalam fotografi.</li>
+                        <li>Tahap pra-pemrosesan dalam beberapa algoritma computer vision.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>Model Warna RGB (Red, Green, Blue)</h4>
+            <p>
+                Model warna <strong>RGB</strong> adalah model warna aditif di mana cahaya Merah, Hijau, dan Biru dicampurkan dalam berbagai proporsi untuk menghasilkan spektrum warna yang luas. Ini adalah model warna utama yang digunakan dalam perangkat elektronik yang memancarkan cahaya, seperti monitor komputer, layar TV, dan smartphone.
+            </p>
+            <ul>
+                <li><strong>Warna Aditif:</strong> Disebut aditif karena dimulai dari hitam (tidak ada cahaya), dan warna ditambahkan untuk menghasilkan warna yang lebih terang. Jika ketiga komponen (R, G, B) dicampur dengan intensitas maksimum, hasilnya adalah putih. Sebaliknya, jika intensitas ketiganya minimum (nol), hasilnya adalah hitam.</li>
+                <li><strong>Channel Warna:</strong> Setiap pixel dalam model RGB memiliki tiga nilai numerik yang merepresentasikan intensitas dari komponen Merah, Hijau, dan Biru.</li>
+                <li><strong>True Color (24-bit):</strong> Umumnya, setiap channel warna (R, G, B) direpresentasikan oleh 8 bit data. Ini berarti ada $2^8$ = 256 tingkat intensitas untuk setiap warna primer. Kombinasi ketiganya (8 bit R + 8 bit G + 8 bit B = 24 bit) dapat menghasilkan sekitar $2^{24}$ $\approx$ 16.7 juta warna berbeda, yang dikenal sebagai "True Color".</li>
+                <li><strong>Contoh Kombinasi RGB (untuk 8-bit per channel):</strong>
+                    <ul>
+                        <li>Merah murni: (255, 0, 0)</li>
+                        <li>Hijau murni: (0, 255, 0)</li>
+                        <li>Biru murni: (0, 0, 255)</li>
+                        <li>Kuning: (255, 255, 0) (Merah + Hijau)</li>
+                        <li>Hitam: (0, 0, 0)</li>
+                        <li>Putih: (255, 255, 255)</li>
+                    </ul>
+                </li>
+            </ul>
+            <p>Berikut adalah perbandingan visual antara versi grayscale dan RGB dari gambar (persegi) yang Anda gunakan:</p>
+            <div class="image-comparison">
+                <figure>
+                    <img id="grayscaleImageDisplayPage4" src="#" alt="Gambar Grayscale Persegi Penuh" style="max-width:200px; max-height:200px;">
+                    <figcaption>Versi Grayscale</figcaption>
+                </figure>
+                <figure>
+                    <img id="originalRGBImageDisplayPage4" src="#" alt="Gambar RGB Persegi Penuh" style="max-width:200px; max-height:200px;">
+                    <figcaption>Versi RGB (Asli Persegi)</figcaption>
+                </figure>
+            </div>
+            <p>Model warna lain yang juga umum adalah CMYK (Cyan, Magenta, Yellow, Key/Black) yang bersifat subtraktif dan digunakan dalam pencetakan, serta HSV/HSL (Hue, Saturation, Value/Lightness) yang lebih intuitif bagi persepsi manusia terhadap warna.</p>
+            <div style="display:flex; justify-content:space-around; margin-top: 30px;">
+                <button id="finishBtnPage4">Selesai Belajar & Ulangi?</button>
+                <button id="startQuizBtnPage4">Ikuti Kuis!</button>
+            </div>
+        </div>
+    </div>
 
     <div id="page-5" class="page">
+        <h2>Uji Pemahamanmu: Kuis Citra Digital! 📝</h2>
+        <div id="quizContainer">
+            <div class="quiz-question">
+                <p><strong>1. Unit terkecil yang membentuk sebuah gambar digital pada layar atau sensor kamera disebut apa?</strong></p>
+                <div class="options-container">
+                    <label><input type="radio" name="question0" value="Vektor"> Vektor</label><br>
+                    <label><input type="radio" name="question0" value="Pixel"> Pixel</label><br>
+                    <label><input type="radio" name="question0" value="Megapixel"> Megapixel</label><br>
+                    <label><input type="radio" name="question0" value="Resolusi"> Resolusi</label><br>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. Resolusi sebuah citra digital mengacu pada apa?</strong></p>
+                <div class="options-container">
+                    <label><input type="radio" name="question1" value="Warna dominan gambar"> Warna dominan gambar</label><br>
+                    <label><input type="radio" name="question1" value="Ukuran fisik gambar"> Ukuran fisik gambar</label><br>
+                    <label><input type="radio" name="question1" value="Jumlah total pixel yang menyusun citra"> Jumlah total pixel yang menyusun citra</label><br>
+                    <label><input type="radio" name="question1" value="Kehalusan tekstur gambar"> Kehalusan tekstur gambar</label><br>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. Transformasi geometri yang melibatkan pemindahan setiap titik objek sejauh vektor tertentu disebut...</strong></p>
+                <div class="options-container">
+                    <label><input type="radio" name="question2" value="Rotasi"> Rotasi</label><br>
+                    <label><input type="radio" name="question2" value="Penskalaan"> Penskalaan</label><br>
+                    <label><input type="radio" name="question2" value="Translasi"> Translasi</label><br>
+                    <label><input type="radio" name="question2" value="Geseran"> Geseran</label><br>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. Proses mempartisi sebuah citra digital menjadi beberapa segmen atau objek yang lebih bermakna dan mudah dianalisis disebut...</strong></p>
+                <div class="options-container">
+                    <label><input type="radio" name="question3" value="Kompresi Citra"> Kompresi Citra</label><br>
+                    <label><input type="radio" name="question3" value="Filter Citra"> Filter Citra</label><br>
+                    <label><input type="radio" name="question3" value="Segmentasi Citra"> Segmentasi Citra</label><br>
+                    <label><input type="radio" name="question3" value="Restorasi Citra"> Restorasi Citra</label><br>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. Citra grayscale merepresentasikan informasi apa pada setiap pixelnya?</strong></p>
+                <div class="options-container">
+                    <label><input type="radio" name="question4" value="Warna primer (RGB)"> Warna primer (RGB)</label><br>
+                    <label><input type="radio" name="question4" value="Intensitas cahaya (luminans) tanpa informasi warna"> Intensitas cahaya (luminans) tanpa informasi warna</label><br>
+                    <label><input type="radio" name="question4" value="Saturasi warna"> Saturasi warna</label><br>
+                    <label><input type="radio" name="question4" value="Hue warna"> Hue warna</label><br>
+                </div>
+            </div>
         </div>
+        <div id="quizFeedback" style="margin-top: 20px; font-weight: bold;"></div>
+        <div style="display:flex; justify-content:space-around; margin-top: 30px;">
+            <button id="checkQuizBtn">Periksa Jawaban</button>
+            <button id="retakeQuizBtn" style="display:none;">Ulangi Kuis</button>
+            <button id="backToStartBtn" style="display:none;">Selesai & Kembali ke Awal</button>
+        </div>
+    </div>
+
     <footer class="main-footer">
         <p>KELOMPOK 1</p>
     </footer>
